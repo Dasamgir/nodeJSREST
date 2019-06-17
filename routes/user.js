@@ -5,20 +5,20 @@ const app = express();
 
 //Traer todos los usuarios
 app.get('/user', (req, res) => {
-    connection.connect();
+    //connection.connect();
     connection.query('SELECT * FROM users', (error, results, fields) => {
         if (error) { throw error };
-        connection.end();
+      //  connection.end();
         res.json(results);
     });
 });
 
 //Traer al usuario cuya id sea :id
 app.get('/user/:id', (req, res) => {
-    connection.connect();
+    //connection.connect();
     connection.query(`SELECT * FROM users WHERE id = ${req.params.id}`, (error, results, fields) => {
         if (error) { throw error };
-        connection.end();
+        //connection.end();
         res.json(results);
     });
 });
@@ -26,11 +26,13 @@ app.get('/user/:id', (req, res) => {
 app.post('/user', (req, res) => {
     let body = req.body;
     if ("name" in body && "username" in body && "email" in body) {
-
-        connection.connect();
+        //connection.connect();
+        
         connection.query(`INSERT INTO users (id, name, username, email) VALUES (NULL, '${body.name}', '${body.username}', '${body.email}');`, (error, results, fields) => {
             if (error) { throw error };
-            connection.end();
+
+            console.log(connection);
+            //connection.end(); // Antes
             res.status(201).json({
                 user: body
             })
